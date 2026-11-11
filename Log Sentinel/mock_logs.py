@@ -1,3 +1,10 @@
+# ==============================================================================
+# Log Sentinel - Log Parser & Automated Threat/Brute-Force Detector
+# Desarrollado por: Martín Celedón (GitHub: https://github.com/martin8989-dar)
+# Especialidad: Ciberseguridad Defensiva / Blue Team
+# Licencia: MIT
+# ==============================================================================
+
 from datetime import datetime, timedelta
 import random
 

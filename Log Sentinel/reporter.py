@@ -1,3 +1,10 @@
+# ==============================================================================
+# Log Sentinel - Log Parser & Automated Threat/Brute-Force Detector
+# Desarrollado por: Martín Celedón (GitHub: https://github.com/martin8989-dar)
+# Especialidad: Ciberseguridad Defensiva / Blue Team
+# Licencia: MIT
+# ==============================================================================
+
 import os
 from collections import Counter
 from datetime import datetime
@@ -76,6 +83,11 @@ class ReporteSesion:
     def generar_archivo_excel(self):
         # Crea una sola hoja con una tabla lineal continua de principio a fin
         libro = openpyxl.Workbook()
+        libro.properties.creator = "Martín Celedón"
+        libro.properties.lastModifiedBy = "Martín Celedón"
+        libro.properties.title = "Log Sentinel Security Audit Report"
+        libro.properties.subject = "Auditoria de Ciberseguridad Defensiva (Blue Team)"
+        libro.properties.description = "Generado por Log Sentinel (https://github.com/martin8989-dar/log-sentinel)"
         hoja = libro.active
         hoja.title = "Incidentes"
         hoja.freeze_panes = "A2"
@@ -217,7 +229,7 @@ class ReporteSesion:
                         {"name": "Distribucion por Pais", "value": self.tabla_paises(), "inline": True},
                     ],
                     "footer": {
-                        "text": f"Periodo: {self.inicio:%d/%b/%Y %H:%M} - {fin:%d/%b/%Y %H:%M} | Log Sentinel",
+                        "text": f"Periodo: {self.inicio:%d/%b/%Y %H:%M} - {fin:%d/%b/%Y %H:%M} | Log Sentinel - Martín Celedón",
                     },
                 }
             ],

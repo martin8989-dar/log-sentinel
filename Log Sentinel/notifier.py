@@ -1,3 +1,10 @@
+# ==============================================================================
+# Log Sentinel - Log Parser & Automated Threat/Brute-Force Detector
+# Desarrollado por: Martín Celedón (GitHub: https://github.com/martin8989-dar)
+# Especialidad: Ciberseguridad Defensiva / Blue Team
+# Licencia: MIT
+# ==============================================================================
+
 import json
 import os
 import time
@@ -135,7 +142,7 @@ def armar_mensaje(alerta: dict) -> dict:
                     {"name": "Verificar IP", "value": enlaces_ip, "inline": False},
                 ],
                 "footer": {
-                    "text": "Log Sentinel - Sistema de Deteccion de Intrusos",
+                    "text": "Log Sentinel | Desarrollado por Martín Celedón (github.com/martin8989-dar)",
                 },
             }
         ],
