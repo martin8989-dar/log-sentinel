@@ -2,6 +2,7 @@
 
 Script en Python para analisis de logs web (formato Nginx / Apache Combined) con deteccion automatizada de reconocimiento, inyeccion SQL, fuerza bruta y generacion de reportes de auditoria hacia Discord y Microsoft Excel.
 
+[![Tests](https://github.com/martin8989-dar/log-sentinel/actions/workflows/tests.yml/badge.svg)](https://github.com/martin8989-dar/log-sentinel/actions/workflows/tests.yml)
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![Security](https://img.shields.io/badge/SecOps-Blue%20Team-red.svg)
 ![Integration](https://img.shields.io/badge/Discord-Webhooks-5865F2.svg)
@@ -46,6 +47,8 @@ Log Sentinel/
 ├── reporter.py        # Generador de reportes ejecutivos en formato Excel (.xlsx)
 ├── main.py            # Punto de entrada por linea de comandos (--file y --live)
 ├── mock_logs.py       # Generador de trafico sintetico (20 legitimos + 10 ataques)
+├── tests/             # Pruebas unitarias con pytest (parser, detector, geoip)
+├── .github/workflows/ # Integracion continua: ejecuta los tests en cada push
 ├── requirements.txt   # Dependencias de Python requeridas
 └── .env.example       # Plantilla de configuracion para variables de entorno
 ```
@@ -163,6 +166,22 @@ Al finalizar un lote o cumplirse el ciclo de monitoreo, el modulo de reportes co
   * Ranking de las IPs con mayor volumen de intentos hostiles.
   * Distribucion porcentual por pais para identificar origenes recurrentes de trafico malicioso.
 * **Adjunto nativo en Microsoft Excel (`.xlsx`)**: El mensaje sube directamente el archivo de auditoria generado con `openpyxl`. El documento incluye formato condicional, auto-filtros, metadatos de sesion y la trazabilidad completa linea por linea para respaldo ante auditorias o presentaciones a gerencia.
+
+---
+
+## Pruebas Automatizadas
+
+El proyecto incluye 34 pruebas unitarias con `pytest` que validan los modulos principales sin depender de internet ni de Discord (las llamadas a la API de geolocalizacion se simulan):
+
+- **Parser**: formato Combined, IPv6, respuestas sin cuerpo (`-`), lineas corruptas y fechas invalidas.
+- **Detector**: rutas sensibles, inyeccion SQL codificada en la URL, User-Agents de escaneres, ventana deslizante de fuerza bruta (incluyendo fallos fuera de la ventana e IPs distintas) y periodo anti-spam.
+- **GeoIP**: deteccion de IPs privadas, uso de cache y pausa automatica ante el limite `429` de la API.
+
+```bash
+python3 -m pytest -v
+```
+
+Cada `push` a `main` ejecuta los tests automaticamente en GitHub Actions sobre Python 3.9, 3.10, 3.11 y 3.12.
 
 ---
 
